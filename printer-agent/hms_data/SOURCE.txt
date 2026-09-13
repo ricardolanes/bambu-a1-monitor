@@ -1,0 +1,11 @@
+Esses arquivos hms_pt.json.gz e hms_en.json.gz sao copiados sem modificacao de:
+https://github.com/greghesp/ha-bambulab (custom_components/bambu_lab/pybambu/hms_error_text/)
+
+Projeto "ha-bambulab" (Home Assistant integration for Bambu Lab printers),
+licenca MIT, copyright (c) 2023 ha-bambulab contributors.
+
+Baixados em 2026-09-13. Se quiser a versao mais atual (novos codigos HMS
+aparecem conforme a Bambu atualiza o firmware), rode:
+
+  curl -o hms_data/hms_pt.json.gz https://raw.githubusercontent.com/greghesp/ha-bambulab/main/custom_components/bambu_lab/pybambu/hms_error_text/hms_pt.json.gz
+  curl -o hms_data/hms_en.json.gz https://raw.githubusercontent.com/greghesp/ha-bambulab/main/custom_components/bambu_lab/pybambu/hms_error_text/hms_en.json.gz

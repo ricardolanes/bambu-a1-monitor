@@ -1,0 +1,11 @@
+<?php
+// Copie este arquivo para config.php e preencha com as mesmas credenciais
+// do .env do printer-agent (DB_HOST, DB_NAME, DB_USER, DB_PASSWORD).
+// NAO comite config.php - config.php.example e o unico que deve ir pro git.
+return [
+    'host'     => 'mysql.seudominio.com',
+    'port'     => 3306,
+    'dbname'   => 'nome_do_banco',
+    'user'     => 'usuario_do_banco',
+    'password' => 'SENHA_AQUI',
+];

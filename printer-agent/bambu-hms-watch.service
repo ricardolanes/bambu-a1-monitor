@@ -1,0 +1,16 @@
+[Unit]
+Description=bambu-hms-watch - monitor de codigos HMS da impressora Bambu Lab
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# ajuste o caminho e o usuario abaixo pro seu ambiente
+User=ricardo
+WorkingDirectory=/home/ricardo/bambu-hms-watch
+ExecStart=/home/ricardo/bambu-hms-watch/venv/bin/python /home/ricardo/bambu-hms-watch/hms_watch.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
