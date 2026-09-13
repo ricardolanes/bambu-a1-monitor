@@ -1,0 +1,14 @@
+# segredos - nunca comitar
+printer-agent/.env
+dashboard/config.php
+
+# python
+printer-agent/venv/
+printer-agent/__pycache__/
+*.pyc
+
+# logs locais
+printer-agent/collect.log
+
+# banco sqlite antigo, se sobrar de algum teste local
+*.db
