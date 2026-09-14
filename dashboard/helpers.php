@@ -92,6 +92,32 @@ function format_minutes(?int $min): string
     return sprintf('%dh %02dmin', intdiv($min, 60), $min % 60);
 }
 
+/**
+ * captured_at (UTC) + minutos restantes -> data/hora prevista de termino,
+ * em horario local (America/Sao_Paulo), formatado como "hoje as HH:MM",
+ * "amanha as HH:MM" ou "DD/MM as HH:MM".
+ */
+function predicted_finish(string $capturedAtUtc, ?int $remainingMinutes): ?string
+{
+    if ($remainingMinutes === null) return null;
+
+    $finish = new DateTime($capturedAtUtc, new DateTimeZone('UTC'));
+    $finish->modify("+{$remainingMinutes} minutes");
+    $finish->setTimezone(new DateTimeZone('America/Sao_Paulo'));
+
+    $now = new DateTime('now', new DateTimeZone('America/Sao_Paulo'));
+    $time = $finish->format('H:i');
+
+    if ($finish->format('Y-m-d') === $now->format('Y-m-d')) {
+        return "hoje às {$time}";
+    }
+    $tomorrow = (clone $now)->modify('+1 day');
+    if ($finish->format('Y-m-d') === $tomorrow->format('Y-m-d')) {
+        return "amanhã às {$time}";
+    }
+    return $finish->format('d/m') . " às {$time}";
+}
+
 /** captured_at (armazenado em UTC pelo coletor) -> "há Ns/min/h". */
 function time_ago(string $mysqlDatetimeUtc): string
 {

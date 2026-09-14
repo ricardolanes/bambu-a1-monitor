@@ -17,6 +17,28 @@ function fmtMinutes(min) {
   return `${Math.floor(min / 60)}h ${String(min % 60).padStart(2, '0')}min`;
 }
 
+function predictedFinish(capturedAtUtc, remainingMinutes) {
+  if (remainingMinutes === null || remainingMinutes === undefined) return '—';
+
+  const finish = new Date(capturedAtUtc.replace(' ', 'T') + 'Z');
+  finish.setUTCMinutes(finish.getUTCMinutes() + Number(remainingMinutes));
+
+  const dayFmt = { timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit' };
+  const time = finish.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' });
+
+  const now = new Date();
+  const finishDay = finish.toLocaleDateString('pt-BR', dayFmt);
+  const todayDay = now.toLocaleDateString('pt-BR', dayFmt);
+  if (finishDay === todayDay) return `hoje às ${time}`;
+
+  const tomorrow = new Date(now);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  if (finishDay === tomorrow.toLocaleDateString('pt-BR', dayFmt)) return `amanhã às ${time}`;
+
+  const shortDate = finish.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit' });
+  return `${shortDate} às ${time}`;
+}
+
 function timeAgo(mysqlUtc) {
   const then = new Date(mysqlUtc.replace(' ', 'T') + 'Z').getTime();
   const diff = Math.floor((Date.now() - then) / 1000);
@@ -114,6 +136,7 @@ function applyLatest(row) {
   set('hero-name', row.subtask_name || 'sem tarefa ativa');
   set('hero-layer', `${row.layer_num ?? 0} / ${row.total_layer_num ?? 0}`);
   set('hero-eta', fmtMinutes(row.mc_remaining_time));
+  set('hero-finish', predictedFinish(row.captured_at, row.mc_remaining_time));
   set('g-nozzle', fmtTemp(row.nozzle_temper));
   set('g-nozzle-target', 'alvo ' + fmtTemp(row.nozzle_target_temper));
   set('g-nozzle-dia', (row.nozzle_diameter ?? '?') + 'mm');

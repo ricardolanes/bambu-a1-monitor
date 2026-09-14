@@ -34,7 +34,7 @@ if ($hasData) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Painel — <?= htmlspecialchars($printerName) ?></title>
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 
@@ -85,6 +85,7 @@ if ($hasData) {
       <dl class="hero-stats">
         <div><dt>Camada</dt><dd id="hero-layer"><?= (int)($row['layer_num'] ?? 0) ?> / <?= (int)($row['total_layer_num'] ?? 0) ?></dd></div>
         <div><dt>Tempo restante</dt><dd id="hero-eta"><?= htmlspecialchars(format_minutes($row['mc_remaining_time'] !== null ? (int)$row['mc_remaining_time'] : null)) ?></dd></div>
+        <div><dt>Previsão de término</dt><dd id="hero-finish"><?= htmlspecialchars($row['mc_remaining_time'] !== null ? predicted_finish($row['captured_at'], (int)$row['mc_remaining_time']) : '—') ?></dd></div>
       </dl>
     </div>
   </section>
@@ -141,6 +142,6 @@ if ($hasData) {
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="app.js?v=4"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
